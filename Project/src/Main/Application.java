@@ -17,17 +17,28 @@ public class Application {
     public static void main(String[] args) {
         areaX = areaY = 50;
         criarArea(areaX, areaY);
+        mostraArea();
     }
 
-    public static void criarArea(int x, int y) {
-        area = new Posicao[x][y];
+    public static void criarArea(int posX, int posY) {
+        area = new Posicao[posX][posY];
         for (int i = 0; i < areaX; i++) {
             for (int j = 0; j < areaY; j++) {
                 area[i][j] = new Posicao();
             }
         }
-        System.out.println("Área " + x + "x" + y + " criada.");
+        System.out.println("Área " + posX + "posX" + posY + " criada.");
 
     }
 
+    public static void mostraArea() {
+        String a = "";
+        for (int i = 0; i < areaX; i++) {
+            for (int j = 0; j < areaY; j++) {
+                Posicao p = area[i][j];
+            }
+            a = a + "[]";
+        }
+        System.out.println(a);
+    }
 }
