@@ -15,16 +15,21 @@ public class Application {
     public static int areaY;
     public static int planta;
     public static Posicao[][] area;
+    public static int coelhoPosX;
+    public static int coelhoPosY;
+
     private static Random r = new Random();
 
     public static void main(String[] args) {
         areaX = areaY = 50;
         criarArea(areaX, areaY);
-        planta = (areaX*areaY)/2;
-        System.out.println("\n"+planta+" plantas criadas!\n");
+        planta = (areaX * areaY) / 2;
+        System.out.println("\n" + planta + " plantas criadas!\n");
         for (int i = 0; i < planta; i++) {
             criarPlantas();
         }
+        adicionarAgentes();
+
         mostraArea();
     }
 
@@ -55,16 +60,25 @@ public class Application {
         }
     }
 
+    public static void adicionarAgentes() {
+        coelhoPosX = r.nextInt(areaX);
+        coelhoPosY = r.nextInt(areaY);
+        Agente coelho = new Coelho();
+        area[coelhoPosX][coelhoPosY].setAgente(coelho);
+        System.out.println("Coelho adicionado em: " + coelhoPosX + "x" + coelhoPosY);
+    }
+
     public static void mostraArea() {
         String a = "";
         for (int i = 0; i < areaX; i++) {
             for (int j = 0; j < areaY; j++) {
                 Posicao p = area[i][j];
-                if(p.getPlanta()){
-                    a = a + "|" + "Y";
-                }
-                else{
-                    a = a + "|" + " ";
+                if (i == coelhoPosX && j == coelhoPosY) {
+                    a = a + "[COELHO]";
+                } else if (p.getPlanta()) {
+                    a = a + "[Y]";
+                } else {
+                    a = a + "[ ]";
                 }
             }
             a = a + "\n";
