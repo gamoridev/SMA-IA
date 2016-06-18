@@ -46,11 +46,7 @@ public class Application {
         while ((x == 0 && y == 0) || (x == areaX - 1 && y == areaY - 1) || sair == false) {
             x = r.nextInt(areaX);
             y = r.nextInt(areaY);
-            if (area[x][y].getPlanta()) {
-                sair = false;
-            } else {
-                sair = true;
-            }
+            sair = !area[x][y].getPlanta();
             area[x][y].setPlanta();
         }
     }
