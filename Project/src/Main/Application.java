@@ -13,24 +13,26 @@ public class Application {
 
     public static int areaX;
     public static int areaY;
-    public static int planta;
+    public static int qtdPlanta;
     public static Posicao[][] area;
     public static int coelhoPosX;
     public static int coelhoPosY;
+
+    public static int nRodada;
 
     private static Random r = new Random();
 
     public static void main(String[] args) {
         areaX = areaY = 50;
         criarArea(areaX, areaY);
-        planta = (areaX * areaY) / 2;
-        System.out.println("\n" + planta + " plantas criadas!\n");
-        for (int i = 0; i < planta; i++) {
+        qtdPlanta = (areaX * areaY) / 2;
+        System.out.println("\n" + qtdPlanta + " plantas criadas aleatoriamente!\n");
+        for (int i = 0; i < qtdPlanta; i++) {
             criarPlantas();
         }
         adicionarAgentes();
 
-        mostraArea();
+        iniciar();
     }
 
     public static void criarArea(int posX, int posY) {
@@ -45,19 +47,20 @@ public class Application {
     }
 
     public static void criarPlantas() {
-        int x, y;
-        x = y = 0;
-        boolean sair = true;
-        while ((x == 0 && y == 0) || (x == areaX - 1 && y == areaY - 1) || sair == false) {
+        int x = 0, y = 0;
+        while ((x == 0 && y == 0) || (x == areaX - 1 && y == areaY - 1)) {
             x = r.nextInt(areaX);
             y = r.nextInt(areaY);
-            if (area[x][y].getPlanta()) {
-                sair = false;
-            } else {
-                sair = true;
-            }
             area[x][y].setPlanta();
         }
+    }
+
+    public static void crescerPlantas() {
+        qtdPlanta = (int) ((qtdPlanta * 0.10) + qtdPlanta);
+        for (int i = 0; i < qtdPlanta; i++) {
+            criarPlantas();
+        }
+        System.out.println("\nQUANTIDADE DE PLANTAS: " + qtdPlanta + "\n");
     }
 
     public static void adicionarAgentes() {
@@ -84,5 +87,25 @@ public class Application {
             a = a + "\n";
         }
         System.out.println(a);
+    }
+
+    public static void iniciar() {
+        int nRodada = 0;
+        while (nRodada < 10) {
+            rodada(nRodada++);
+            try {
+                Thread.sleep(1000);
+            } catch (Exception e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+        mostraArea();
+
+    }
+
+    public static void rodada(int n) {
+        System.out.println("Número da rodada:" + n);
+        mostraArea();
+        crescerPlantas();
     }
 }
